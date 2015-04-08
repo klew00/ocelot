@@ -45,33 +45,21 @@ public class TestOkapiTmService {
                 .build();
         this.tmService.importTmx("simple_tm", testTm);
 
-        OcelotSegment appleOrange = new SimpleSegment.Builder()
-                .segmentNumber(1)
-                .source("apple orange")
-                .build();
-        List<TmMatch> appleOrangeResults = tmService.getFuzzyTermMatches(appleOrange);
+        List<TmMatch> appleOrangeResults = tmService.getFuzzyTermMatches("apple orange");
         assertEquals(2, appleOrangeResults.size());
         assertEquals("apple orange pear", appleOrangeResults.get(0).getSource().getDisplayText());
         assertEquals("simple_tm", appleOrangeResults.get(0).getTmOrigin());
         assertEquals("orange apple pear", appleOrangeResults.get(1).getSource().getDisplayText());
         assertEquals("simple_tm", appleOrangeResults.get(1).getTmOrigin());
 
-        OcelotSegment orangeApple = new SimpleSegment.Builder()
-                .segmentNumber(1)
-                .source("orange apple")
-                .build();
-        List<TmMatch> orangeAppleResults = tmService.getFuzzyTermMatches(orangeApple);
+        List<TmMatch> orangeAppleResults = tmService.getFuzzyTermMatches("orange apple");
         assertEquals(2, appleOrangeResults.size());
         assertEquals("orange apple pear", orangeAppleResults.get(0).getSource().getDisplayText());
         assertEquals("simple_tm", orangeAppleResults.get(0).getTmOrigin());
         assertEquals("apple orange pear", orangeAppleResults.get(1).getSource().getDisplayText());
         assertEquals("simple_tm", orangeAppleResults.get(1).getTmOrigin());
 
-        OcelotSegment watermelon = new SimpleSegment.Builder()
-                .segmentNumber(1)
-                .source("watermelon")
-                .build();
-        List<TmMatch> watermelonResults = tmService.getFuzzyTermMatches(watermelon);
+        List<TmMatch> watermelonResults = tmService.getFuzzyTermMatches("watermelon");
         assertEquals(1, watermelonResults.size());
         assertEquals("watermelon pineapple", watermelonResults.get(0).getSource().getDisplayText());
         assertEquals("simple_tm", watermelonResults.get(0).getTmOrigin());
@@ -85,11 +73,7 @@ public class TestOkapiTmService {
                 .build();
         this.tmService.importTmx("simple_tm", testTm);
 
-        OcelotSegment seg = new SimpleSegment.Builder()
-                .segmentNumber(1)
-                .source("apple")
-                .build();
-        List<TmMatch> results = tmService.getConcordanceMatches(seg);
+        List<TmMatch> results = tmService.getConcordanceMatches("apple");
         assertEquals(4, results.size());
     }
 

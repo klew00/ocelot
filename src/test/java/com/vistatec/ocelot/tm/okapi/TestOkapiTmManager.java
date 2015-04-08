@@ -75,10 +75,7 @@ public class TestOkapiTmManager {
 
         manager.initializeNewTm("initTM", newDataDir);
 
-        OcelotSegment appleOrange = new SimpleSegment.Builder()
-                .source("apple orange")
-                .build();
-        assertEquals(2, tmService.getFuzzyTermMatches(appleOrange).size());
+        assertEquals(2, tmService.getFuzzyTermMatches("apple orange").size());
     }
 
     @Test
@@ -120,13 +117,9 @@ public class TestOkapiTmManager {
                 cfgService, tmxWriter);
         tmService = new OkapiTmService(manager, penalizer, cfgService);
 
-        OcelotSegment appleOrange = new SimpleSegment.Builder()
-                .source("apple orange")
-                .build();
-
-        assertEquals(0, tmService.getFuzzyTermMatches(appleOrange).size());
+        assertEquals(0, tmService.getFuzzyTermMatches("apple orange").size());
         manager.changeTmDataDir(existingTmName, newDataDir);
-        assertEquals(2, tmService.getFuzzyTermMatches(appleOrange).size());
+        assertEquals(2, tmService.getFuzzyTermMatches("apple orange").size());
 
         assertTrue(oldDataDir.exists());
         assertTrue(newDataDir.exists());

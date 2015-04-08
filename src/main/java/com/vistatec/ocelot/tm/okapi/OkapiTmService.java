@@ -37,16 +37,15 @@ public class OkapiTmService implements TmService {
     }
 
     @Override
-    public List<TmMatch> getFuzzyTermMatches(OcelotSegment segment) throws IOException {
+    public List<TmMatch> getFuzzyTermMatches(String segment) throws IOException {
         Iterator<OkapiTmManager.TmPair> tmPairs = manager.getSeekers();
-        SegmentVariant source = segment.getSource();
         int pensieveThreshold = new Double(cfgService.getFuzzyThreshold()).intValue();
 
         List<TmMatch> matches = new ArrayList<>();
         while (tmPairs.hasNext()) {
             OkapiTmManager.TmPair tmPair = tmPairs.next();
             List<TmHit> results = tmPair.getSeeker().searchFuzzy(
-                    new TextFragment(source.getDisplayText()),
+                    new TextFragment(segment),
                     pensieveThreshold, cfgService.getMaxResults(), null);
 
             matches.addAll(convertOkapiTmHit(tmPair.getTmOrigin(), results));
@@ -55,17 +54,15 @@ public class OkapiTmService implements TmService {
     }
 
     @Override
-    public List<TmMatch> getConcordanceMatches(OcelotSegment segment) throws IOException {
+    public List<TmMatch> getConcordanceMatches(String segment) throws IOException {
         Iterator<OkapiTmManager.TmPair> tmPairs = manager.getSeekers();
-        SegmentVariant source = segment.getSource();
         int pensieveThreshold = new Double(cfgService.getFuzzyThreshold()).intValue();
 
         List<TmMatch> matches = new ArrayList<>();
         while(tmPairs.hasNext()) {
             OkapiTmManager.TmPair tmPair = tmPairs.next();
             List<TmHit> results = tmPair.getSeeker().searchSimpleConcordance(
-                    source.getDisplayText(),
-                    pensieveThreshold, cfgService.getMaxResults(), null);
+                    segment, pensieveThreshold, cfgService.getMaxResults(), null);
 
             matches.addAll(convertOkapiTmHit(tmPair.getTmOrigin(), results));
         }
